@@ -12,6 +12,26 @@ control.getAll = (req,res) => {
     })
 }
 
+control.getView1 = (req, res) => {
+    conn.query('SELECT ciudades.nombre AS ciudad, provincias.nombre AS prov, ciudades.poblacion_hab AS pob_ciudad, ciudades.superficie_km2 AS sup_ciudad FROM provincias JOIN ciudades ON ciudades.ref_ciudad = provincias.id ORDER BY prov ASC', (err, result)=>{
+        if(err){
+            return res.status(403).json(err)
+        } else {
+            return res.status(200).json(result)
+        } 
+    })
+}
+
+control.getView_1 = (req, res) => {
+    conn.query('SELECT *FROM prov_ciud', (err, result)=>{
+        if(err){
+            return res.status(403).json(err)
+        } else {
+            return res.status(200).json(result)
+        } 
+    })
+}
+
 control.insert = (req, res) => {
     const provincia = req.body
     console.log(provincia)
