@@ -5,25 +5,35 @@ from django.forms.models import model_to_dict
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import FileResponse, Http404, JsonResponse
-from .models import Provinces
+from rest_framework import viewsets, status
+from rest_framework. response import Response
+
+from provinciasCrud.serializers import ProvincesSerializer, RegionSerializer
+from .models import Provinces, Region
 
 # Create your views here.
-@csrf_exempt
-def get_provinces(request):
-    provinces = Provinces.objects.all().values()
-    return JsonResponse([dict(row) for row in provinces], safe=False)
+class ProvincesViewSet(viewsets.ModelViewSet):
+    queryset = Provinces.objects.all()
+    serializer_class = ProvincesSerializer
 
-@csrf_exempt
-def get_province(request, id):
-    province = Provinces.objects.get(id=id)
-    province_dict = model_to_dict(province)
-    return JsonResponse([province_dict], safe=False)
+    def retrieve(self, request, pk=None):
+        queryset = self.get_queryset()
+        province = get_object_or_404(queryset, pk=pk)
+        serializer = self.get_serializer(province)
+        return Response(serializer.data)
 
-@csrf_exempt
-def post_new_province(request):
-    if request.method == 'POST':
-        province = json.loads(request.body)
-        print({'name': province['name']})
-        new_province = Provinces(name=province['name'], surface=province['surface'])
-        new_province.save()
-    return JsonResponse({'message': 'new province inserted'})
+    def update(self, request, pk=None):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class RegionViewSet(viewsets.ModelViewSet):
+    queryset = Region.objects.all()
+    serializer_class = RegionSerializer
