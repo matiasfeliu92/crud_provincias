@@ -1,7 +1,6 @@
 # Argentina Province App
 
 ## Description
-***
 App to get the Argentina provinces with their respective cities, regions and surface
 
 ### Commands to install and start application
