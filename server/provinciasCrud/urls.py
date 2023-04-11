@@ -20,4 +20,5 @@ urlpatterns = [
     path('/<int:id>', views.get_one_province, name='get_one_province'),
     path('/cities/<int:id>', views.get_one_city, name='get_one_city'),
     path('/regions/<int:id>', views.get_one_region, name='get_one_region'),
+    path('/new_prov', views.post_new_province, name='post_new_province'),
 ]

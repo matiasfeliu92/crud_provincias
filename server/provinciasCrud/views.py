@@ -85,6 +85,20 @@ def get_one_city(request, id):
     except:
         return HttpResponse('city not found', status=404)
     
+@csrf_exempt
 def post_new_province(request):
+    regions = Region.objects.all()
+    # regions_list = [region.name for region in regions]
+    regionn = None
+    id_region = None
     if request.method == 'POST':
         new_province = json.loads(request.body)
+        print(new_province)
+        for region in regions:
+            if new_province['region_id'] == region.name:
+                regionn = Region.objects.get(id=region.id)
+                id_region = regionn
+        print(id_region)
+        province = Provinces(name=new_province['name'], surface=new_province['surface'], region_id=regionn, population=new_province['population'], density= new_province['density'])
+        province.save()
+    return HttpResponse('new province created', status=200)
