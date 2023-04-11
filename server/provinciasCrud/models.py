@@ -9,8 +9,10 @@ class Region(models.Model):
 
 class Provinces(models.Model):
     name = models.CharField(max_length=30, unique=True)
-    surface = models.IntegerField()
+    surface = models.DecimalField(max_digits=10, decimal_places=2)
     region_id = models.ForeignKey(Region, null=True, on_delete=models.CASCADE)
+    population = models.DecimalField(max_digits=10, decimal_places=2)
+    density = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         ordering = ['name']
@@ -20,7 +22,7 @@ class Provinces(models.Model):
 
 class Cities(models.Model):
     name = models.CharField(max_length=30)
-    population = models.IntegerField()
+    population = models.DecimalField(max_digits=10, decimal_places=2)
     province_id = models.ForeignKey(Provinces, null=True, on_delete=models.CASCADE)
 
     class Meta:
