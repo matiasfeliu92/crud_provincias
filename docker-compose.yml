@@ -1,10 +1,20 @@
 version: '3.10'
 
 services:
-  service3:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+  serverhttp:
+    build: 
+      context: ./server
+    command: python manage.py runserver 0.0.0.0:5000
+    volumes:
+      - ./server:/server
+    ports:
+      - "5000:5000"
+
+  clienthttp:
+    build: 
+      context: ./client
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./client:/client
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
