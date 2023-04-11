@@ -1,3 +1,6 @@
 .env
 prov
 __pychache__
+cli
+recuento_leads_cotibot
+prov_data
