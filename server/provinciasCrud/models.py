@@ -8,7 +8,7 @@ class Region(models.Model):
         ordering = ['id']
 
 class Provinces(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=60, unique=True)
     surface = models.DecimalField(max_digits=10, decimal_places=2)
     region_id = models.ForeignKey(Region, null=True, on_delete=models.CASCADE)
     population = models.DecimalField(max_digits=10, decimal_places=2)
