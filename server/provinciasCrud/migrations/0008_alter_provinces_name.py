@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='provinces',
             name='name',
-            field=models.CharField(max_length=80, unique=True),
+            field=models.CharField(max_length=100, unique=True),
         ),
     ]
