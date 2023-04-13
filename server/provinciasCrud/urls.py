@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 
 from . import views
 
+app_name = "provinciasCrud"
+
 urlpatterns = [
     path('', views.get_provinces, name='get_provinces'),
     path('cities', views.get_cities, name='get_cities'),

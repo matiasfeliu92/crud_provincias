@@ -11,8 +11,16 @@ import json
 from .models import Provinces, Region, Cities
 
 def get_provinces(request):
-    provinces = Provinces.objects.all().values()
-    return JsonResponse([dict(row) for row in provinces.values()], safe=False)
+    try:
+        provinces = Provinces.objects.all().values()
+        # province_names = [province.name for province in provinc]
+        # print(province_names)
+        # return JsonResponse(province_names, safe=False)
+        # return HttpResponse('estas son las provincias')
+        return JsonResponse([dict(row) for row in provinces], safe=False)
+    except:
+        return HttpResponse('not provinces found', status=404)
+
 
 def get_cities(request):
     cities = Cities.objects.all().values()
@@ -34,11 +42,13 @@ def get_one_region(request, id):
 
 def get_one_province(request, id):
     try:
-        province = Provinces.objects.get(pk=id)
+        province = Provinces.objects.get(id=id)
         data = {
             'name': province.name,
             'surface': province.surface,
-            'region': province.region_id
+            'region': province.region_id,
+            'density': province.density,
+            'population': province.population
         }
         return JsonResponse(data, safe=False)
     except:
