@@ -9,10 +9,10 @@ class Region(models.Model):
 
 class Provinces(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    surface = models.DecimalField(max_digits=10, decimal_places=2)
+    surface = models.FloatField()
     region_id = models.ForeignKey(Region, null=True, on_delete=models.CASCADE)
-    population = models.DecimalField(max_digits=10, decimal_places=2)
-    density = models.DecimalField(max_digits=10, decimal_places=2)
+    population = models.FloatField()
+    density = models.FloatField()
 
     class Meta:
         ordering = ['name']
